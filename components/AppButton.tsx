@@ -1,8 +1,8 @@
 import { AntDesign } from "@expo/vector-icons";
 import { FC } from "react";
 import {
+  Pressable,
   StyleSheet,
-  TouchableHighlight,
   TouchableHighlightProps,
   View,
 } from "react-native";
@@ -23,12 +23,13 @@ const AppButton: FC<Props> = ({
   ...props
 }) => {
   return (
-    <TouchableHighlight
-      style={[
+    <Pressable
+      style={({ pressed }) => [
         styles.button,
         style,
         iconName && !title ? styles.iconOnlyButton : {},
         !isPrimary ? { backgroundColor: colors.backgroundShade } : {},
+        pressed ? { opacity: 0.7 } : {},
       ]}
       {...props}
     >
@@ -43,7 +44,7 @@ const AppButton: FC<Props> = ({
           </AppText>
         )}
       </View>
-    </TouchableHighlight>
+    </Pressable>
   );
 };
 

@@ -1,27 +1,36 @@
+import { StatusBar } from "expo-status-bar";
 import { FC } from "react";
-import { SafeAreaView, StatusBar, StyleSheet, View } from "react-native";
+import {
+  Platform,
+  SafeAreaView,
+  StatusBar as SBar,
+  StyleSheet,
+  View,
+} from "react-native";
 import Logo from "../assets/logo.svg";
 import { colors } from "../styles/variables";
-import BottomNav from "./BottomNav";
 
 interface Props {
   showLogo?: boolean;
+  navigation: any;
 }
 
-const Layout: FC<Props> = ({ children, showLogo = true }) => {
+const Layout: FC<Props> = ({ children, navigation, showLogo = true }) => {
   return (
     <SafeAreaView style={styles.container}>
-      {showLogo && <Logo />}
+      {showLogo && <Logo onPress={() => navigation.navigate("Home")} />}
       <View style={styles.main}>{children}</View>
-      <BottomNav />
-      <StatusBar />
+      {/* <BottomNav /> */}
+      {/* <StatusBar /> */}
+      <StatusBar style="light" />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 8,
+    paddingTop: (Platform.OS === "android" ? SBar.currentHeight || 0 : 0) + 16,
+    paddingBottom: 60,
     flex: 1,
     alignItems: "center",
     backgroundColor: colors.background,
