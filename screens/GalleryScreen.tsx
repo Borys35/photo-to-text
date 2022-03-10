@@ -20,6 +20,7 @@ const GalleryScreen: FC = () => {
         </AppText>
         <AppButton
           title="Open gallery"
+          iconName="folder1"
           isPrimary
           onPress={async () => {
             const result = await ImagePicker.launchImageLibraryAsync();

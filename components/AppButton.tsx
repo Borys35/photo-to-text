@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
   },
   text: {
     textTransform: "uppercase",
+    textAlign: "center",
   },
 });
 

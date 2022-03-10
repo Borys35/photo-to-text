@@ -57,6 +57,7 @@ export default function App() {
       </Stack.Navigator> */}
       <Tab.Navigator
         initialRouteName="Home"
+        backBehavior="history"
         screenOptions={({ route }) => ({
           headerShown: false,
           tabBarActiveTintColor: colors.text,
