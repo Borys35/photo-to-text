@@ -10,15 +10,17 @@ import {
   ParamListBase,
   RouteProp,
 } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AppLoading from "expo-app-loading";
+import { CameraCapturedPicture } from "expo-camera";
 import HomeScreen from "./screens/HomeScreen";
 import PhotoScreen from "./screens/PhotoScreen";
+import TakenPhotoScreen from "./screens/TakenPhotoScreen";
 import { colors, fontFamilies } from "./styles/variables";
 
 export type RootStackParamList = {
   Home: undefined;
   Photo: undefined;
+  "Taken Photo": { takenPhoto: CameraCapturedPicture };
 };
 
 export default function App() {
@@ -26,7 +28,7 @@ export default function App() {
 
   if (!fontsLoaded) return <AppLoading />;
 
-  const Stack = createNativeStackNavigator<RootStackParamList>();
+  // const Stack = createNativeStackNavigator<RootStackParamList>();
   const Tab = createBottomTabNavigator();
 
   const tabBarIcon =
@@ -73,6 +75,11 @@ export default function App() {
       >
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Photo" component={PhotoScreen} />
+        <Tab.Screen
+          name="Taken Photo"
+          component={TakenPhotoScreen}
+          options={{ tabBarButton: () => null }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );

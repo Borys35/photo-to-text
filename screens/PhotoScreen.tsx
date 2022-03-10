@@ -1,7 +1,12 @@
-import { useIsFocused } from "@react-navigation/native";
+import {
+  NavigationProp,
+  useIsFocused,
+  useNavigation,
+} from "@react-navigation/native";
 import { Camera } from "expo-camera";
 import React, { FC, useEffect, useRef, useState } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
+import { RootStackParamList } from "../App";
 import AppButton from "../components/AppButton";
 import AppText from "../components/AppText";
 import Layout from "../components/Layout";
@@ -10,6 +15,8 @@ const PhotoScreen: FC = () => {
   const [granted, setGranted] = useState<boolean>();
   const cameraRef = useRef<Camera>(null);
   const isFucused = useIsFocused();
+  const navigation =
+    useNavigation<NavigationProp<RootStackParamList, "Photo">>();
 
   useEffect(() => {
     (async () => {
@@ -19,7 +26,7 @@ const PhotoScreen: FC = () => {
   }, []);
 
   return (
-    <Layout navigation={false}>
+    <Layout>
       <View style={styles.container}>
         {granted === false ? (
           <AppText>Permission's not granted</AppText>
@@ -38,8 +45,7 @@ const PhotoScreen: FC = () => {
                 const picture = await cameraRef.current?.takePictureAsync();
                 if (!picture) return;
 
-                const { uri } = picture;
-                console.log(uri);
+                navigation.navigate("Taken Photo", { takenPhoto: picture });
               }}
             />
           </>

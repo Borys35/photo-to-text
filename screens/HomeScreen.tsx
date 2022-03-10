@@ -12,7 +12,7 @@ const HomeScreen: FC = () => {
     useNavigation<NavigationProp<RootStackParamList, "Home">>();
 
   return (
-    <Layout showLogo={false} navigation={navigation}>
+    <Layout showLogo={false}>
       <View style={styles.container}>
         <Logo width={180} height={120} />
         <View style={styles.buttons}>
