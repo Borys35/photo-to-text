@@ -1,12 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { FC } from "react";
-import {
-  Platform,
-  SafeAreaView,
-  StatusBar as SBar,
-  StyleSheet,
-  View,
-} from "react-native";
+import { Platform, StatusBar as SBar, StyleSheet, View } from "react-native";
 import Logo from "../assets/logo.svg";
 import { colors } from "../styles/variables";
 
@@ -17,13 +11,13 @@ interface Props {
 
 const Layout: FC<Props> = ({ children, navigation, showLogo = true }) => {
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       {showLogo && <Logo onPress={() => navigation.navigate("Home")} />}
       <View style={styles.main}>{children}</View>
       {/* <BottomNav /> */}
       {/* <StatusBar /> */}
       <StatusBar style="light" />
-    </SafeAreaView>
+    </View>
   );
 };
 

@@ -1,29 +1,49 @@
-import React, { FC } from "react";
+import { useIsFocused } from "@react-navigation/native";
+import { Camera } from "expo-camera";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
-import Logo from "../assets/logo.svg";
 import AppButton from "../components/AppButton";
+import AppText from "../components/AppText";
 import Layout from "../components/Layout";
-import { paddingHorizontal } from "../styles/variables";
 
 const PhotoScreen: FC = () => {
+  const [granted, setGranted] = useState<boolean>();
+  const cameraRef = useRef<Camera>(null);
+  const isFucused = useIsFocused();
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      setGranted(status === "granted");
+    })();
+  }, []);
+
   return (
     <Layout navigation={false}>
       <View style={styles.container}>
-        <Logo width={180} height={120} />
-        <View style={styles.buttons}>
-          <AppButton
-            onPress={() => console.log("heey")}
-            title="Take a photo"
-            iconName="camera"
-            style={styles.mainButton}
-            isPrimary
-          />
-          <AppButton
-            title="Gallery"
-            iconName="picture"
-            style={styles.secondButton}
-          />
-        </View>
+        {granted === false ? (
+          <AppText>Permission's not granted</AppText>
+        ) : granted === undefined ? (
+          <View />
+        ) : (
+          <>
+            {isFucused && (
+              <Camera style={styles.camera} ref={cameraRef}></Camera>
+            )}
+            <AppButton
+              iconName="camera"
+              isPrimary
+              style={styles.button}
+              onPress={async () => {
+                const picture = await cameraRef.current?.takePictureAsync();
+                if (!picture) return;
+
+                const { uri } = picture;
+                console.log(uri);
+              }}
+            />
+          </>
+        )}
       </View>
     </Layout>
   );
@@ -34,20 +54,21 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "space-evenly",
+    marginTop: 16,
+    marginBottom: 16,
   },
-  buttons: {
-    alignSelf: "stretch",
-    alignItems: "stretch",
-    paddingHorizontal,
+  camera: {
+    position: "absolute",
     width: Dimensions.get("screen").width,
+    top: 0,
+    bottom: 0,
+    padding: 16,
+    alignItems: "flex-end",
   },
-  mainButton: {
-    height: 240,
-  },
-  secondButton: {
-    paddingHorizontal: 64,
-    marginTop: -16,
-    alignSelf: "center",
+  button: {
+    position: "absolute",
+    zIndex: 9999,
+    bottom: 16,
   },
 });
 
