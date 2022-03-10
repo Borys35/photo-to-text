@@ -10,6 +10,7 @@ import { RootStackParamList } from "../App";
 import AppButton from "../components/AppButton";
 import AppText from "../components/AppText";
 import Layout from "../components/Layout";
+import { paddingHorizontal } from "../styles/variables";
 
 const PhotoScreen: FC = () => {
   const [granted, setGranted] = useState<boolean>();
@@ -70,6 +71,8 @@ const styles = StyleSheet.create({
     bottom: 0,
     padding: 16,
     alignItems: "flex-end",
+    paddingHorizontal,
+    borderRadius: 16,
   },
   button: {
     position: "absolute",

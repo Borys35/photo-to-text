@@ -12,6 +12,8 @@ import {
 } from "@react-navigation/native";
 import AppLoading from "expo-app-loading";
 import { CameraCapturedPicture } from "expo-camera";
+import { ImagePickerResult } from "expo-image-picker";
+import GalleryScreen from "./screens/GalleryScreen";
 import HomeScreen from "./screens/HomeScreen";
 import PhotoScreen from "./screens/PhotoScreen";
 import TakenPhotoScreen from "./screens/TakenPhotoScreen";
@@ -20,7 +22,8 @@ import { colors, fontFamilies } from "./styles/variables";
 export type RootStackParamList = {
   Home: undefined;
   Photo: undefined;
-  "Taken Photo": { takenPhoto: CameraCapturedPicture };
+  Gallery: undefined;
+  "Taken Photo": { takenPhoto: CameraCapturedPicture | ImagePickerResult };
 };
 
 export default function App() {
@@ -38,6 +41,7 @@ export default function App() {
 
       if (route.name === "Home") iconName = "home";
       else if (route.name === "Photo") iconName = "camera";
+      else if (route.name === "Gallery") iconName = "folder1";
 
       return <AntDesign name={iconName as any} size={size} color={color} />;
     };
@@ -75,6 +79,7 @@ export default function App() {
       >
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Photo" component={PhotoScreen} />
+        <Tab.Screen name="Gallery" component={GalleryScreen} />
         <Tab.Screen
           name="Taken Photo"
           component={TakenPhotoScreen}

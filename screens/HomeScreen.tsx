@@ -24,6 +24,7 @@ const HomeScreen: FC = () => {
             isPrimary
           />
           <AppButton
+            onPress={() => navigation.navigate("Gallery")}
             title="Gallery"
             iconName="picture"
             style={styles.secondButton}
